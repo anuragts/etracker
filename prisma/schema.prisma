@@ -12,8 +12,7 @@ datasource db {
 model Expense{
   id Int @id @default(autoincrement())
   name String
-  amount Float
-  date DateTime
+  amount Float 
   category String
   user User @relation(fields: [userId], references: [id])
   userId Int
