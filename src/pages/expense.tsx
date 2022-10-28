@@ -1,53 +1,50 @@
-
 import getId from "./getId";
+import { useState } from "react";
+
 export default function Expense() {
+  const [name, setName] = useState([]);
+  const [amount, setAmount] = useState([]);
+  const [category, setCategory] = useState([]);
   const id = getId();
 
   if (id === null || id === "") {
     window.location.href = "/login";
   }
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const form = e.target;
-    const data = new FormData(form);
-    const dataObj = Object.fromEntries(data);
-    const response = await fetch("/api/expense/create", {
+    const response = await fetch("/api/expense/getAll", {
       method: "POST",
       body: JSON.stringify({
         userId: id,
-        amount: dataObj.amount,
-        name: dataObj.name,
-        category: dataObj.category,
       }),
       headers: {
         "Content-Type": "application/json",
       },
     });
     const result = await response.json();
-    const g = result[0].name;
-    console.log(result);
-    console.log(g);
+    const n = result[0].name;
+    const a = result[0].amount;
+    const c = result[0].category;
+    
     if (response.status === 200) {
-        console.log("success");
+      console.log("success");
     } else {
-        console.log("failed");
+      console.log("failed");
     }
-  };
+    setName(n);
+    setAmount(a);
+    setCategory(c);
+      };
 
-    return (
-      <div>
-        <h1>Expense</h1>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="name">Name</label>
-          <input type="text" name="name" id="name" />
-          <label htmlFor="amount">Amount</label>
-          <input type="number" name="amount" id="amount" />
-          <label htmlFor="category">Category</label>
-          <input type="text" name="category" id="category" />
-          <button type="submit">Submit</button>
-        </form>
-        {/* <p>{data}</p> */}
-      </div>
-    );
-  };
-
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <button type="submit">Get Expense</button>
+        <div>name - {name}</div>
+        <div>amount - {amount}</div>
+        <div>category - {category}</div>
+      </form>
+    </div>
+  );
+}
