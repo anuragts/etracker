@@ -22,20 +22,16 @@ export default function Login() {
 
     const result = await response.json();
     const y = result[0].id;
-    const userId = y;
-    console.log(userId)
-    const parsedUserId = userId?.toString() || "";
+    const parsedUserId = y?.toString() || null;
     localStorage.setItem("userId", parsedUserId);
+    setData(parsedUserId)
     console.log(result);
-    let tmt = "";
     if (response.status === 200) {
       console.log("success");
-      tmt = "loggedin";
+      window.location.href = "/expense";
     } else {
       console.log("failed");
-      const tmt = "failed";
     }
-    setData(y);
   };
 
   return (

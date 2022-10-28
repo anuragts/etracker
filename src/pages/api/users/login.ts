@@ -11,8 +11,5 @@ export default async function login(req:NextApiRequest,res:NextApiResponse) {
     } else {
         const user = await prisma.user.findMany({ where: { email } });
         res.status(200).json(user);
-        // const userId = user[0].id;
-        // const parsedUserId = userId.toString();
-        // localStorage.setItem("userId", parsedUserId);
     }
 }
