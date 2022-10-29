@@ -1,50 +1,32 @@
-import getId from "./getId";
-import { useState } from "react";
+import { prisma } from "../db/client";
 
-export default function Expense() {
-  const [name, setName] = useState([]);
-  const [amount, setAmount] = useState([]);
-  const [category, setCategory] = useState([]);
-  const id = getId();
-
-  // if (id === null || id === "") {
-  //   window.location.href = "/login";
-  // }
-
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    const response = await fetch("/api/expense/getAll", {
-      method: "POST",
-      body: JSON.stringify({
-        userId: id,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const result = await response.json();
-    const n = result[0].name;
-    const a = result[0].amount;
-    const c = result[0].category;
-    
-    if (response.status === 200) {
-      console.log("success");
-    } else {
-      console.log("failed");
-    }
-    setName(n);
-    setAmount(a);
-    setCategory(c);
-      };
-
-  return (
+export default function expense(props:any){
+return(
+    <>
     <div>
-      <form onSubmit={handleSubmit}>
-        <button type="submit">Get Expense</button>
-        <div>name - {name}</div>
-        <div>amount - {amount}</div>
-        <div>category - {category}</div>
-      </form>
+        <h1>Expense</h1>
+        {/* {props.expenses.map((expense:any) => (
+            <div key={expense.id}>
+                <div>{expense.name}</div>
+                <div>{expense.amount}</div>
+                <div>{expense.category}</div>
+                </div>
+        ))} */}
+        {props.expenses}
+        {props.expenses[0].name}
+        {props.expenses[0].amount}
+        {props.expenses[0].category}
     </div>
-  );
+    </>
+)
+}
+
+export const getServerSideProps = async () => {
+    const expenses = await prisma.expense.findMany();
+
+    return{
+        props: {
+            expenses:JSON.stringify(expenses),
+        },
+    }
 }
