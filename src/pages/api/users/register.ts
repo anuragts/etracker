@@ -8,7 +8,6 @@ export default async function register(
 ) {
   const { name, email, password, password2 } = req.body;
   const exists = prisma.user.findMany({ where: { email } });
-
   if (!name || !email || !password) {
     res.status(400).send("Please fill all fields");
   } else if ((await exists).length > 0) {

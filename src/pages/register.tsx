@@ -3,11 +3,11 @@ import getId from "./getId";
 export default function Register() {
   const [data, setData] = useState([]);
   const id = getId();
-  if (typeof window !== "undefined") {
-      if ( id !== "") {
-        window.location.href = "/expense";
-      }
-  }
+//   if (typeof window !== "undefined") {
+//       if ( id !== "") {
+//         window.location.href = "/expense";
+//       }
+//   }
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();

@@ -7,9 +7,9 @@ export default function Expense() {
   const [category, setCategory] = useState([]);
   const id = getId();
 
-  if (id === null || id === "") {
-    window.location.href = "/login";
-  }
+  // if (id === null || id === "") {
+  //   window.location.href = "/login";
+  // }
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
