@@ -4,7 +4,7 @@ export default function Login() {
   const [data, setData] = useState([]);
   const id = getId();
   if (typeof window !== "undefined") {
-    if (id || id !== "") {
+    if ( id !== "") {
       window.location.href = "/expense";
     }
 }
